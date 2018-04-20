@@ -1,32 +1,48 @@
 # Script generated with Bloom
-pkgdesc="ROS - @(Description)"
-@[if Homepage and Homepage != '']url='@(Homepage)'@[end if]
+pkgdesc="ROS - Controller for a differential drive mobile base."
+url='https://github.com/ros-controls/ros_controllers/wiki'
 
-pkgname='@(Package)'
-pkgver='@(Version)_@(Pkgrel)'
+pkgname='ros-lunar-diff-drive-controller'
+pkgver='0.13.2_1'
 pkgrel=1
 arch=('any')
-license=(@[for p in Licenses]'@p'@\n@[end for])
+license=('BSD'
+)
 
-makedepends=(@[for p in BuildDepends]'@p'@\n@[end for])
+makedepends=('ros-lunar-catkin'
+'ros-lunar-controller-interface'
+'ros-lunar-controller-manager'
+'ros-lunar-nav-msgs'
+'ros-lunar-realtime-tools'
+'ros-lunar-rostest'
+'ros-lunar-std-srvs'
+'ros-lunar-tf'
+'ros-lunar-urdf'
+'ros-lunar-xacro'
+)
 
-depends=(@[for p in Depends]'@p'@\n@[end for])
+depends=('ros-lunar-controller-interface'
+'ros-lunar-nav-msgs'
+'ros-lunar-realtime-tools'
+'ros-lunar-tf'
+'ros-lunar-urdf'
+)
 
-conflicts=(@[for p in Conflicts]'@p'@\n@[end for])
-replaces=(@[for p in Replaces]'@p'@\n@[end for])
+conflicts=()
+replaces=()
 
-_dir=@(Name)
+_dir=diff_drive_controller
 source=()
 md5sums=()
 
 prepare() {
-    cp -R $startdir/@(Name) $srcdir/@(Name)
+    cp -R $startdir/diff_drive_controller $srcdir/diff_drive_controller
 }
 
 build() {
   # Use ROS environment variables
   source /usr/share/ros-build-tools/clear-ros-env.sh
-  [ -f /opt/ros/@(ROSDistribution)/setup.bash ] && source /opt/ros/@(ROSDistribution)/setup.bash
+  [ -f /opt/ros/lunar/setup.bash ] && source /opt/ros/lunar/setup.bash
 
   # Create build directory
   [ -d ${srcdir}/build ] || mkdir ${srcdir}/build
@@ -39,7 +55,7 @@ build() {
   cmake ${srcdir}/${_dir} \
         -DCMAKE_BUILD_TYPE=Release \
         -DCATKIN_BUILD_BINARY_PACKAGE=ON \
-        -DCMAKE_INSTALL_PREFIX=/opt/ros/@(ROSDistribution) \
+        -DCMAKE_INSTALL_PREFIX=/opt/ros/lunar \
         -DPYTHON_EXECUTABLE=/usr/bin/python2 \
         -DPYTHON_INCLUDE_DIR=/usr/include/python2.7 \
         -DPYTHON_LIBRARY=/usr/lib/libpython2.7.so \
